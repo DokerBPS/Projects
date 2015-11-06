@@ -1,162 +1,165 @@
-﻿*
-{
-	margin:0;
-	padding:0;
-}
-body
-{
-	overflow: hidden;
-	font-family: Segoe\000020UI,Tahoma,Arial;
-	font-size: 11px;
+﻿* {
+    margin: 0;
+    padding: 0;
 }
 
-	#mainDiv
-	{
-		border: 1px solid #000;
-		margin: 0 auto;
-		/*height: 407px;*/
-	}
-	
-	#header
-	{
-		border-bottom: 1px solid #A4ABB2;
-		padding: 0 0 0 20px;
-	}
-	
-	#content
-	{
-		padding: 10px 0 10px 20px;
-		background-color: #E9EDF1;
-	}
-		
-	#nameAll, #attachType
-	{
-		display: table-row;
-	}
-	
-		#lbl_Name
-		{
-			margin: 15px 10px 0 0;
-			display: table-cell;
-		}
-	
-		#txbx_NameDiv
-		{
-			margin: 0 10px 0 0;
-			width: auto;
-			display: table-cell;
-		}
-			#txbx_NameDiv input
-			{
-				margin: 10px 0 0 0;
-				height: 14px;
-				width: 150%;
-				font-family: Segoe\000020UI,Tahoma,Arial;
-				font-size: 11px;
-				
-			}
-		#lbl_attachType
-		{
-			display: table-cell;
-		}
-		
-		#slct_attachType
-		{
-			margin: 0 0 0 10px;
-			display: table-cell;
-			width: 50%;
-		}
-			#slct_attachType select
-			{
-				margin: 10px 0 0 0;
-				height: 17px;
-				width: 153%;
-				font-family: Segoe\000020UI,Tahoma,Arial;
-				font-size: 11px;
-			}
-		.error
-		{
-		  border: 2px solid red;
-		}
+body {
+    overflow: hidden;
+    font-family: Segoe\000020UI,Tahoma,Arial;
+    font-size: 11px;
+}
 
-	
-	#attachFile
-	{
-		background-color: #E9EDF1;
-		padding-top: 30px;
-		height: 270px;
-	}
-	
-		#attachFileImg
-		{
-			margin: 0 0 5px 5px;
-			border-bottom:1px solid #A4ABB2; 
-		}
-		
-		/*#attachFileTable
-		{
-			display: table;
-		}
-		
-		    #firstRow
-		    {
-		        display:table-cell;
-		        float: left;
-		        margin: 0 15px 0 0;
-		    }
-		    #secondRow
-		    {
-		        display:table-cell;
-		        float: left;
-		        margin-bottom: 5px;
-		    }
-		        #secondRow div
-		        {
-		            margin: 24px 0 0 0;		            
-		        }
-        */
-			.fileAttachmentText
-			{
-				color: #365484;
-				font-weight: bold;
-				font-size: 11px;
-			}
-			
-			/*#file_upload
-			{
-			    margin: 10px 0 0 5px;
-			    width: 150px;
-			}*/
-	   
-		.button
-		{
-            margin: 5px 0 5px 0;
-			font-family: Segoe\000020UI,Tahoma,Arial;
-			font-size: 11px;
-			line-height: 16px;
-			height: 20px;
-			width: 84px;
-			text-align: center;
-			cursor: pointer;
-			border: 1px solid #000;
-			background-repeat: repeat-x;
-			padding-left: 5px;
-			padding-right: 5px;
-		}
-		
-			.button:hover
-			{
-				border-color:#336699;
-				background-image:url(../img/ButtonSelectedGradient.png);
-			}
+#mainDiv {
+    border: 1px solid #000;
+    margin: 0 auto;
+}
 
-	.important
-	{
-		color: Red;
-  
-	}
+#header {
+    border-bottom: 1px solid #A4ABB2;
+    padding: 0 0 0 15px;
+    height: 60px;
+}
+
+    #header h3, #header p {
+        margin: 5px 0 0 0;
+    }
+
+#content {
+    padding: 10px 0 10px 20px;
+    background-color: #E9EDF1;
+}
+
+#nameAll, #attachType {
+    display: table-row;
+}
+
+#lbl_Name {
+    margin: 15px 10px 0 0;
+    display: table-cell;
+}
+
+#txbx_NameDiv {
+    margin: 0 10px 0 0;
+    width: auto;
+    display: table-cell;
+}
+
+    #txbx_NameDiv input {
+        margin: 10px 0 0 0;
+        height: 14px;
+        width: 150%;
+        font-family: Segoe\000020UI,Tahoma,Arial;
+        font-size: 11px;
+    }
+
+#lbl_attachType {
+    display: table-cell;
+}
+
+#slct_attachType {
+    margin: 0 0 0 10px;
+    display: table-cell;
+    width: 50%;
+}
+
+    #slct_attachType select {
+        margin: 10px 0 0 0;
+        height: 17px;
+        width: 153%;
+        font-family: Segoe\000020UI,Tahoma,Arial;
+        font-size: 11px;
+    }
+
+.error {
+    border: 2px solid red;
+}
+
+
+#attachFile {
+    background-color: #E9EDF1;
+    padding-top: 30px;
+    height: 270px;
+}
+
+#attachFileImg {
+    margin: 0 0 5px 5px;
+    border-bottom: 1px solid #A4ABB2;
+}
+
+.fileAttachmentText {
+    color: #365484;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.button {
+    margin: 5px 20px 5px 0;
+    font-family: Segoe\000020UI,Tahoma,Arial;
+    font-size: 11px;
+    line-height: 16px;
+    height: 20px;
+    width: 84px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #000;
+    background-repeat: repeat-x;
+    padding-left: 5px;
+    padding-right: 5px;
+    position: relative;
+}
+
+    .button:hover {
+        border-color: #336699;
+        background-image: url(../img/ButtonSelectedGradient.png);
+    }
+
+.important {
+    color: Red;
+}
 
 
 .file_upload {
     margin: 0 5px 0 0;
 }
+
+#fileNameBox{
+    background-color: #E6E6E6;
+    height: 20px;
+    margin: -27px 0 0 70px;
+
+}
+
+    #fileNameBox input{
+        margin: 0 10px 0 10px;
+        width: 80px;
+    }
+
+#box {
+    margin-top: 5px;
+    margin-left: 5px;
+    font-weight: bold;
+    display: block;
+    width: 490px;
+}
+
+.dragDrop{
+    border: 3px dashed #c2c2c2;
+    color: #c2c2c2;
+    text-align: center;
+    font-size: 11pt;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.dragOver{
+    color: #000;
+    border: 3px dashed #000;
+}
+
+.errorFile {
+    color: red;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+

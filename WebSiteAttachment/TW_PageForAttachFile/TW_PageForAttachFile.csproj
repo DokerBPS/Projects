@@ -68,8 +68,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="StoreCredentialsLibrary">
-      <HintPath>..\..\..\StoreCredentialsLibrary.dll</HintPath>
+    <Reference Include="StoreCredentialsLibrary, Version=1.0.1412.1601, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\StoreCredentialsLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Services" />
@@ -99,13 +100,15 @@
     <Content Include="img\frm_required.gif" />
     <Content Include="img\icon.gif" />
     <Content Include="img\transparent_spacer.gif" />
-    <Content Include="scripts\jquery-1.3.2.min.js" />
-    <Content Include="scripts\jquery.uploadify.min.js" />
-    <Content Include="scripts\jquery-1.7.2.min.js" />
-    <Content Include="scripts\scripts.js" />
+    <Content Include="js\dragDropFunctions.js" />
+    <Content Include="js\jquery-1.3.2.min.js" />
+    <Content Include="js\jquery.uploadify.min.js" />
+    <Content Include="js\jquery-1.7.2.min.js" />
+    <Content Include="js\modernizr-2.5.3.js" />
+    <Content Include="js\scripts.js" />
     <Content Include="img\secHead.png" />
-    <Content Include="scripts\uploadify.js" />
-    <Content Include="scripts\uploadify.swf" />
+    <Content Include="js\uploadify.js" />
+    <Content Include="js\uploadify.swf" />
     <Content Include="style\styles.css" />
     <Content Include="style\uploadify.css" />
     <Content Include="Web.config">
@@ -126,8 +129,13 @@
     <Compile Include="AttachFile.aspx.designer.cs">
       <DependentUpon>AttachFile.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DragDropHandler.ashx.cs">
+      <DependentUpon>DragDropHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="HelperClasses\AvailableExtension.cs" />
     <Compile Include="HelperClasses\Connection\ConfigSettings.cs" />
     <Compile Include="HelperClasses\CrmMethods.cs" />
+    <Compile Include="HelperClasses\FileController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Upload.ashx.cs">
       <DependentUpon>Upload.ashx</DependentUpon>
@@ -138,6 +146,8 @@
     <Folder Include="App_Data\images\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DragDropHandler.ashx" />
+    <None Include="Properties\PublishProfiles\WebSiteAttachment.pubxml" />
     <None Include="Properties\PublishProfiles\Профиль1.pubxml" />
     <Content Include="Upload.ashx" />
   </ItemGroup>

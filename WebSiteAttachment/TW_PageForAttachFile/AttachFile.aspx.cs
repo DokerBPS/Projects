@@ -14,7 +14,8 @@ namespace TW_PageForAttachFile
 {
     public partial class AttachFile : System.Web.UI.Page
     {
-        private Guid _propertyId = Guid.Empty;
+        private Guid entityId = Guid.Empty;
+        private string entityName = string.Empty;
         private Guid _attachmentId = Guid.Empty;
 
         const int MaxTotalBytes = 10485760; // 1 MB
@@ -26,8 +27,6 @@ namespace TW_PageForAttachFile
             lbl_ErrorMessage.Text = string.Empty;
             try
             {
-                //var xrm = new XrmServiceContext("Xrm");
-
                 txbx_Name.Style.Clear();
                 file_upload.Style.Clear();
                 DropDownList1.Style.Clear();
@@ -61,15 +60,29 @@ namespace TW_PageForAttachFile
                 //}
                 #endregion
 
+                if (IsCompatibilityMode())
+                    StylesForCompatibilityMode();
+
                 if (!GetParamFromUrl())
                 {
-                    RegisterClientScriptBlock("clientScript", "<script> alert('Invalid Property ID! Verify Property ID');</script>");
+                    ClientScript.RegisterClientScriptBlock(GetType(), "clientScript", "<script> alert('Invalid Property ID! Verify Property ID');</script>");
                     DisableControls();
                     return;
                 }
 
                 if (Page.IsPostBack)
                 {
+                    var browser = Request.Browser;
+                    if (!browser.Type.Contains("IE") && !browser.Type.Contains("InternetExplorer") 
+                        && !browser.Type.Contains("Firefox"))
+                    {
+                        FileController.PostedFile = file_upload.PostedFile;
+                    }
+                    else if (IsCompatibilityMode())
+                    {
+                        FileController.PostedFile = file_upload.PostedFile;
+                    }
+                    
                     string message = "Fix the following errors: ";
                     bool showError = false;
 
@@ -83,25 +96,16 @@ namespace TW_PageForAttachFile
 
                     string extension = string.Empty;
 
-                    /*Verify if user used IE8*/
-                    //if (isIE)
-                    //{
-                    //    #region Work with .ashx
-                    //    WorkWithIE8(notAvailableExtensions, ref message, ref showError, ref extension);
-                    //    #endregion
-                    //}
-                    //else
-                    //{
-                    #region Work with FileUpload
-                    WorkWithoutIE(notAvailableExtensions, ref message, ref showError, ref extension);
-                    #endregion
-                    //}
-                    /*end verification*/
+                    IsValidFile(notAvailableExtensions, ref message, ref showError, ref extension);
+
                     if (DropDownList1.SelectedValue == string.Empty)
                     {
                         message += " Choose attachment type;";
                         showError = true;
                         DropDownList1.Style.Add("border", "1px solid red");
+
+                        if(IsCompatibilityMode())
+                            DropDownList1.Style.Add("background-color", "#EAC0CA");
                     }
 
                     if (showError)
@@ -132,24 +136,12 @@ namespace TW_PageForAttachFile
                     }*/
                     #endregion
 
-                    //if (SaveValueInCrm(txbx_Name.Value, DropDownList1.SelectedIndex, xrm))
-                    //{
-                    if (CrmMethods.SaveValueInCrm(txbx_Name.Value, DropDownList1.SelectedIndex, ref _propertyId, ref _attachmentId))
+                    if (CrmMethods.SaveValueInCrm(txbx_Name.Value, DropDownList1.SelectedIndex, entityName, ref entityId, ref _attachmentId))
                     {
-                        //if (isIE)
-                        //{
-                        //    if (!AttachFileToWebSiteAttachment(Upload.PostedFile, xrm, txbx_Name.Value))
-                        //        DeleteCreatedRecord(xrm, AttachmentID);
-                        //}
-                        //else
-                        //{
-                        //if (!AttachFileToWebSiteAttachment(file_upload.PostedFile, xrm, txbx_Name.Value))
-                        if (!CrmMethods.AttachFileToWebSiteAttachment(file_upload.PostedFile, txbx_Name.Value, ref _attachmentId))
+                        if (!CrmMethods.AttachFileToWebSiteAttachment(FileController.PostedFile, txbx_Name.Value, ref _attachmentId))
                         {
-                            //DeleteCreatedRecord(xrm, AttachmentID);
                             CrmMethods.DeleteCreatedRecord(_attachmentId);
                         }
-                        //}
 
                         ClientScript.RegisterStartupScript(
                          this.Page.GetType(),
@@ -167,20 +159,60 @@ namespace TW_PageForAttachFile
             }
         }
 
-        private void WorkWithoutIE(string notAvailableExtensions, ref string message, ref bool showError, ref string extension)
+        /// <summary>
+        /// Set styles for elements if IE in compatibility mode
+        /// </summary>
+        private void StylesForCompatibilityMode()
         {
-            if (file_upload.PostedFile != null)
+            // dropdown list
+            DropDownList1.Style.Add("margin-left", "100px");
+            DropDownList1.Style.Add("margin-top", "-30px");
+            DropDownList1.Style.Add("width", "360px");
+
+            // attachment name
+            txbx_Name.Style.Add("margin-left", "110px");
+            txbx_Name.Style.Add("margin-top", "-30px");
+            txbx_Name.Style.Add("width", "360px");
+
+            //Hide Drag & Drop box
+            box.Style.Add("display", "none");
+        }
+
+        private bool IsCompatibilityMode()
+        {
+            if (Request.Browser.Type.Contains("IE7"))
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Verify the validity of the file
+        /// </summary>
+        /// <param name="notAvailableExtensions"></param>
+        /// <param name="message"></param>
+        /// <param name="showError"></param>
+        /// <param name="extension"></param>
+        private void IsValidFile(string notAvailableExtensions, ref string message, ref bool showError, ref string extension)
+        {
+            //file_upload.PostedFile changed to FileController.PostedFile
+            
+            if (FileController.PostedFile != null)
             {
-                if (file_upload.PostedFile.FileName != string.Empty)
+                if (FileController.PostedFile.FileName != string.Empty)
                 {
-                    extension = System.IO.Path.GetExtension(file_upload.PostedFile.FileName).Remove(0, 1);
+                    extension = System.IO.Path.GetExtension(FileController.PostedFile.FileName).Remove(0, 1);
                 }
 
-                if ((file_upload.PostedFile.FileName == string.Empty) && (file_upload.PostedFile.ContentLength == 0) || notAvailableExtensions.Contains(extension))
+                if (FileController.PostedFile.FileName == string.Empty ||
+                    FileController.PostedFile.ContentLength >= 16777216 ||
+                    (notAvailableExtensions.Contains(extension) || extension != AvailableExtension.PDF))
                 {
                     message += " Choose valid file;";
                     showError = true;
                     file_upload.Style.Add("border", "1px solid red");
+                    maxSize.Style.Add("color", "red");
+                    maxSize.Style.Add("font-weight", "bold");
                 }
             }
             else
@@ -200,7 +232,8 @@ namespace TW_PageForAttachFile
                     extension = System.IO.Path.GetExtension(Upload.PostedFile.FileName).Remove(0, 1);
                 }
 
-                if ((Upload.PostedFile.FileName == string.Empty) && (Upload.PostedFile.ContentLength == 0) || notAvailableExtensions.Contains(extension))
+                if ((Upload.PostedFile.FileName == string.Empty) && (Upload.PostedFile.ContentLength == 0) || 
+                    notAvailableExtensions.Contains(extension))
                 {
                     message += " Choose valid file;";
                     showError = true;
@@ -233,10 +266,13 @@ namespace TW_PageForAttachFile
                 if (ParamCount <= 0)
                     return validID = false;
 
-                for (int i = 0; i < ParamCount; i++)
-                {
-                    _propertyId = Guid.Parse(HttpContext.Current.Request.QueryString[i]);
-                }
+                entityId = Guid.Parse(HttpContext.Current.Request.QueryString["id"]);
+                entityName = HttpContext.Current.Request.QueryString["entityName"];
+
+                //for (int i = 0; i < ParamCount; i++)
+                //{
+                //    entityId = Guid.Parse(HttpContext.Current.Request.QueryString[i]);
+                //}
                 validID = true;
             }
             catch
@@ -274,7 +310,7 @@ namespace TW_PageForAttachFile
                 Microsoft.Xrm.Sdk.Entity attachment = new Microsoft.Xrm.Sdk.Entity("dnl_customattachment");
                 attachment.Attributes.Add("dnl_name", attachName);
                 attachment.Attributes.Add("dnl_attachmenttype", new Microsoft.Xrm.Sdk.OptionSetValue(attachType));
-                attachment.Attributes.Add("dnl_property", new Microsoft.Xrm.Sdk.EntityReference("awx_property", _propertyId));
+                attachment.Attributes.Add("dnl_property", new Microsoft.Xrm.Sdk.EntityReference("awx_property", entityId));
 
                 _attachmentId = xrm.Create(attachment);
                 saveValue = true;

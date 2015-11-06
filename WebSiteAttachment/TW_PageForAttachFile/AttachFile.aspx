@@ -7,11 +7,14 @@
     <title>Web site attachment: New - Microsoft Dynamics CRM</title>
     <link rel="shortcut icon" href="img/icon.gif" type="image/gif" />
     <link href="style/styles.css" rel="stylesheet" type="text/css" />
-    <script src="scripts/scripts.js" type="text/javascript"></script>
-    <script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style/uploadify.css" />
-    <script type="text/javascript" src="scripts/jquery.uploadify.min.js"></script>
-    <script src="scripts/uploadify.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="js/scripts.js"></script>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.uploadify.min.js"></script>
+    <script type="text/javascript" src="js/uploadify.js"></script>
+    <script type="text/javascript" src="js/modernizr-2.5.3.js"></script>
+    <script type="text/javascript" src="js/dragDropFunctions.js"></script>
 
     <!--<script type="text/javascript">
 		$(function () {
@@ -27,7 +30,6 @@
 			});
 		});
 	</script>-->
-
 </head>
 <body>
     <form id="form1" runat="server" method="post" enctype="multipart/form-data">
@@ -50,7 +52,7 @@
                     <div id="lbl_attachType">
                         <span>Attachment Type:<span class="important">*</span></span>
                     </div>
-                    <div id="slct_attachType">
+                    <div id="slct_attachType" runat="server">
                         <asp:DropDownList ID="DropDownList1" runat="server">
                             <asp:ListItem Selected="True"></asp:ListItem>
                             <asp:ListItem>Demo</asp:ListItem>
@@ -70,47 +72,58 @@
                 <div id="attachFileTable">
                     <table>
                         <tr>
+                            <td><span id="maxSize" runat="server">Max. file size: 16 Mb</span></td>
+                            <td></td>
+                        </tr>
+                       <tr>
                             <td>
                                 <span>File name: <span class="important">*</span></span>
                                 <asp:FileUpload ID="file_upload" runat="server" CssClass="file_upload" />
+
+                                <%--<div id="fileNameBox" hidden="hidden">
+                                    <span id="fileName"></span>
+                                    <input type="button" value="Browse" class="button"/>
+                                </div>
+                                
+                                <div id="box" class="dragDrop">Drag & Drop files here.</div>--%>
                             </td>
+                            <td></td>
                             <td>
 
                                 <input id="Submit1" type="submit" name="btn_attach" value="Attach" class="button" runat="server" onclick="document.forms['form1'].submit();" />
                                 <script type="text/javascript">
                                     $('#Submit1').click(function () {
                                         $(this).attr("disabled", true);
+                                        //document.getElementById("regexValidator").style.display = 'none';
                                     });
                                 </script>
                             </td>
-                        </tr>
-                        <tr>
-                            <td></td>
                             <td>
                                 <input type="button" name="btn_close" value="Close" class="button" onclick="closeWindows();" />
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <div id="fileNameBox" hidden="hidden">
+                                    <span id="fileName"></span>
+                                    <input type="button" value="Browse" class="button"/>
+                                </div>
+                                
+                                <%--<asp:RegularExpressionValidator ID="regexValidator" runat="server"
+                                     ControlToValidate="file_upload"
+                                     ErrorMessage="Only PDF files are allowed" 
+                                     ValidationExpression="(.*\.([Pp][Dd][Ff])|.*\.([Pp][Dd][Ff])$)" 
+
+                                     style="color: red; 
+                                            font-weight:bold;
+                                            display: block;
+                                            margin-top: 10px;">
+                                </asp:RegularExpressionValidator>--%>
+                            </td>
+                        </tr>
                     </table>
+                    <div id="box" class="dragDrop" runat="server">Drop file here</div>
                 </div>
-                <!--
-			<div id="attachFileTable">
-				<div id="firstRow">
-					<div>
-						<span>File name: <span class="important">*</span></span>
-					</div>
-					<div>
-						
-					</div>
-				</div>
-				<div id="secondRow">
-					<div>
-						
-						<br/>
-						<br/>
-						<input type="button" name="btn_close" value="Close" class="button" onclick="closeWindows();"/>
-					</div>
-				</div>
-			</div>-->
             </div>
             <asp:Label ID="lbl_ErrorMessage" runat="server" Text="" ForeColor="#990000"></asp:Label>
         </div>

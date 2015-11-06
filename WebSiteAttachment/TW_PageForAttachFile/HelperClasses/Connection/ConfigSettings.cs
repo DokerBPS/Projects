@@ -26,6 +26,13 @@ namespace TW_PageForAttachFile.HelperClasses.Connection
             Login = settins.Login;
             Password = settins.Password;
             Url = settins.Url;
+
+            #region For testing on localhost
+            //Login = "Transwestern\\IXS20";
+            //Password = "Trans_2";
+            //Url = "https://pursuittest.transwestern.net";
+            ////Url = "https://pursuit.transwestern.net";
+            #endregion
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.Xrm.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Description;
@@ -65,7 +64,7 @@ namespace TW_PageForAttachFile.HelperClasses
         /// <param name="attachName"></param>
         /// <param name="attachType"></param>
         /// <returns>Return true if websiteattachment created successfull</returns>
-        public static bool SaveValueInCrm(string attachName, int attachType, ref Guid propertyID, ref Guid attachmentID)
+        public static bool SaveValueInCrm(string attachName, int attachType, string entityName, ref Guid entityID, ref Guid attachmentID)
         {
             using (var xrm = new XrmServiceContext(Connection))
             {
@@ -73,7 +72,12 @@ namespace TW_PageForAttachFile.HelperClasses
                 Microsoft.Xrm.Sdk.Entity attachment = new Microsoft.Xrm.Sdk.Entity("dnl_customattachment");
                 attachment.Attributes.Add("dnl_name", attachName);
                 attachment.Attributes.Add("dnl_attachmenttype", new Microsoft.Xrm.Sdk.OptionSetValue(attachType));
-                attachment.Attributes.Add("dnl_property", new Microsoft.Xrm.Sdk.EntityReference("awx_property", propertyID));
+                
+                if(entityName.ToLower() == "awx_property")
+                    attachment.Attributes.Add("dnl_property", new Microsoft.Xrm.Sdk.EntityReference(entityName, entityID));
+
+                if (entityName.ToLower() == "awx_availability")
+                    attachment.Attributes.Add("dnl_availability", new Microsoft.Xrm.Sdk.EntityReference(entityName, entityID));
 
                 attachmentID = xrm.Create(attachment);
 

@@ -31,6 +31,15 @@ namespace TW_PageForAttachFile {
         protected global::System.Web.UI.HtmlControls.HtmlInputText txbx_Name;
         
         /// <summary>
+        /// slct_attachType элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl slct_attachType;
+        
+        /// <summary>
         /// DropDownList1 элемент управления.
         /// </summary>
         /// <remarks>
@@ -38,6 +47,15 @@ namespace TW_PageForAttachFile {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        
+        /// <summary>
+        /// maxSize элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl maxSize;
         
         /// <summary>
         /// file_upload элемент управления.
@@ -56,6 +74,15 @@ namespace TW_PageForAttachFile {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputSubmit Submit1;
+        
+        /// <summary>
+        /// box элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl box;
         
         /// <summary>
         /// lbl_ErrorMessage элемент управления.
